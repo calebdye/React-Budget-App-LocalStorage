@@ -8,6 +8,8 @@ import { toast } from "react-toastify"
 //componenets
 import Intro from "../components/intro"
 import AddBudgetForm from "../components/AddBudgetForm"
+import AddExpenseForm from "../components/AddExpenseForm"
+
 
 //Helper Functions
 import { createBudget, fetchData } from "../helpers"
@@ -55,11 +57,23 @@ const Dashboard = () => {
                     {userName}</span></h1>
                     <div className="gird-sm">
                         {/* {{budgets ? () : ()}} */}
-                        <div className="grid-lg">
+                       { 
+                       budgets && budgets.length > 0 ?
+                       (
+                            <div className="grid-lg">
                             <div className="flex-lg">
                                 <AddBudgetForm />
+                                <AddExpenseForm budgets={budgets} />
                             </div>
                         </div>
+                       ) : (
+                        <div className="grid-sm">
+                            <p>Persoanl budgeting is the secret to financial freedom.</p>
+                            <p>Create a budget to get started!</p>
+                            <AddBudgetForm />
+                        </div>
+                       )
+                        }
                     </div>
             </div> 
             ) : <Intro /> }
