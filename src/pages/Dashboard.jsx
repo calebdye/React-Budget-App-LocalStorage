@@ -12,7 +12,7 @@ import AddExpenseForm from "../components/AddExpenseForm"
 
 
 //Helper Functions
-import { createBudget, fetchData } from "../helpers"
+import { createBudget, createExpense, fetchData } from "../helpers"
 
 //Loader
 export function dashboardLoader(){
@@ -35,17 +35,30 @@ export async function dashboardAction({request}){
     }
     
     if (_action === "createBudget") {
-        try{
-            createBudget({
-              name: values.newBudget,
-              amount: values.newBudgetAmount
-            })
-            return toast.success(`Budget created!`)
+        try {
+          createBudget({
+            name: values.newBudget,
+            amount: values.newBudgetAmount,
+          })
+          return toast.success("Budget created!")
         } catch (e) {
-            throw new Error("There was a problem creating your budget.")
-        }   
+          throw new Error("There was a problem creating your budget.")
+        }
+      }
+    
+      if (_action === "createExpense") {
+        try {
+          createExpense({
+            name: values.newExpense,
+            amount: values.newExpenseAmount,
+            budgetId: values.newExpenseBudget
+          })
+          return toast.success(`Expense ${values.newExpense} created!`)
+        } catch (e) {
+          throw new Error("There was a problem creating your expense.")
+        }
+      }
     }
-}
 
 const Dashboard = () => {
     const {userName,budgets} = useLoaderData()
